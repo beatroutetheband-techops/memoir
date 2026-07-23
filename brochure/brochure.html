@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BeatRoute — Custom Songs Brochure</title>
+<style>
+  @page { size: 210mm 297mm; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :root {
+    --black: #111111;
+    --ivory: #F8F5F0;
+    --gold: #C8A96A;
+    --burgundy: #5A2435;
+    --serif: "Didot", "Playfair Display", "Georgia", serif;
+    --sans: "Avenir Next", "Avenir", "Helvetica Neue", sans-serif;
+  }
+  html, body { width: 210mm; background: #fff; font-family: var(--sans); }
+
+  .sheet {
+    width: 210mm; height: 297mm;
+    overflow: hidden;
+    page-break-after: always;
+    position: relative;
+  }
+
+  /* ============ SHARED ============ */
+  .goldrule { width: 15mm; height: 0.35mm; background: var(--gold); border: none; }
+  .micro {
+    font-family: var(--sans); font-weight: 600;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ============ PAGE 1: COVER & OVERVIEW (DARK THEME) ============ */
+  .cover-sheet {
+    background: var(--black);
+    color: var(--ivory);
+    padding: 15mm 15mm 12mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cover-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2mm;
+  }
+  .cover-header .logo { width: 70mm; }
+  .cover-header .brand-subtext {
+    margin-top: 4.5mm; display: flex; align-items: center; gap: 3.5mm;
+  }
+  .cover-header .brand-subtext .line { width: 14mm; height: 0.25mm; background: var(--gold); }
+  .cover-header .brand-subtext span {
+    font-size: 11pt; letter-spacing: 0.3em; text-indent: 0.3em; color: var(--gold);
+    text-transform: uppercase; font-weight: 700; font-family: var(--serif);
+  }
+  .cover-header .brand-byline {
+    font-size: 8pt; font-style: italic; color: #9C9A95;
+    margin-top: 1.5mm; letter-spacing: 0.08em;
+  }
+
+  .cover-hero {
+    text-align: center;
+    margin-top: 2mm;
+    width: 100%;
+  }
+  .cover-hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 26pt; line-height: 1.25; color: var(--ivory);
+    margin-bottom: 5mm;
+  }
+  .cover-hero h1 em { font-style: italic; color: var(--gold); }
+  .cover-hero .sub {
+    font-size: 9.5pt; line-height: 1.65;
+    color: #B2B0AA; max-width: 155mm; margin: 0 auto;
+  }
+  .cover-hero .wave-block { margin-top: 5mm; }
+  .cover-hero .wave-block svg { width: 56mm; }
+
+  /* Section Styling */
+  .section { width: 100%; }
+  .section-title {
+    display: flex; align-items: center; gap: 4mm; margin-bottom: 5mm; justify-content: center;
+  }
+  .section-title::before, .section-title::after {
+    content: ""; flex: 1; height: 0.25mm; background: #5E5039;
+  }
+  .section-title.dark::before, .section-title.dark::after {
+    background: #D3C3C8;
+  }
+  .section-title span {
+    font-size: 8.5pt; letter-spacing: 0.25em; color: var(--gold); font-weight: 600; text-transform: uppercase;
+  }
+  .section-title.dark span { color: var(--burgundy); }
+
+  /* How It Works Grid */
+  .hiw-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5mm 8mm;
+    width: 100%;
+  }
+  .hiw-step { display: flex; gap: 4mm; align-items: flex-start; }
+  .hiw-step .num {
+    flex: none; width: 7.5mm; height: 7.5mm; border-radius: 50%;
+    border: 0.3mm solid var(--gold); color: var(--gold);
+    font-family: var(--serif); font-size: 10pt;
+    display: flex; align-items: center; justify-content: center;
+    background: #201D17;
+  }
+  .hiw-step h4 { font-size: 9.5pt; font-weight: 700; color: var(--ivory); margin-bottom: 1mm; letter-spacing: 0.02em; }
+  .hiw-step p { font-size: 8pt; line-height: 1.45; color: #9C9A95; }
+
+  /* Perfect For Occasions Tag Cloud */
+  .occasions-grid {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 2.8mm 4mm;
+    max-width: 180mm; margin: 0 auto;
+  }
+  .occ-tag {
+    font-size: 8.2pt; font-weight: 600; color: var(--ivory);
+    border: 0.25mm solid #5A4D39; border-radius: 3mm;
+    padding: 1.2mm 3.5mm; background: #1C1813;
+    display: flex; align-items: center; gap: 1.8mm;
+  }
+  .occ-tag::before {
+    content: "◆"; font-size: 6pt; color: var(--gold);
+  }
+
+  .cover-footer {
+    display: flex; flex-direction: column; align-items: center; width: 100%;
+    border-top: 0.25mm solid #2A2A2A; padding-top: 3.5mm;
+  }
+  .cover-footer p { font-size: 6pt; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; }
+
+
+  /* ============ PAGE 2: DETAILS & PRICING (LIGHT THEME) ============ */
+  .details-sheet {
+    background: var(--ivory);
+    color: var(--black);
+    padding: 15mm 15mm 12mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .pricing-header {
+    text-align: center;
+    width: 100%;
+  }
+  .pricing-header .labelwave { display: flex; justify-content: center; margin-top: 2.5mm; }
+  .pricing-header .labelwave svg { width: 30mm; }
+
+  /* Packages 2x2 Grid */
+  .packages-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4.5mm;
+    width: 100%; margin-top: 1mm;
+  }
+
+  .pcard {
+    background: #ffffff; border-radius: 4mm;
+    padding: 4mm 4.5mm; position: relative;
+    border: 0.25mm solid #E2DCD3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .pcard .card-top { width: 100%; }
+  .pcard .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.5mm; }
+  .pcard .name { font-family: var(--serif); font-size: 12.5pt; color: var(--black); font-weight: 600; }
+  .pcard .price { font-family: var(--serif); font-size: 12pt; color: var(--burgundy); font-weight: 700; }
+  .pcard .desc { font-size: 7.2pt; color: #555; line-height: 1.35; margin-bottom: 3mm; }
+  .pcard ul { list-style: none; display: flex; flex-direction: column; gap: 1.2mm; }
+  .pcard li { font-size: 7pt; color: #333; padding-left: 2.8mm; position: relative; }
+  .pcard li::before {
+    content: ""; position: absolute; left: 0; top: 1.3mm;
+    width: 0.9mm; height: 0.9mm; border-radius: 50%; background: var(--gold);
+  }
+
+  /* Featured Pro Card (Gradient & box-shadow removed to prevent Chrome print overlay bug) */
+  .pcard.featured {
+    background: var(--burgundy);
+    border: 0.45mm solid var(--gold);
+  }
+  .pcard.featured .name { color: var(--ivory); }
+  .pcard.featured .price { color: var(--gold); }
+  .pcard.featured .desc { color: #D2CFC9; }
+  .pcard.featured li { color: #F8F5F0; }
+  .pcard.featured li::before { background: var(--gold); }
+  .badge {
+    position: absolute; top: -2.5mm; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: var(--black);
+    font-size: 5.8pt; font-weight: 700; letter-spacing: 0.18em; text-indent: 0.18em;
+    padding: 0.8mm 3mm; border-radius: 3mm; white-space: nowrap;
+  }
+
+  /* Custom Card */
+  .pcard.custom-card {
+    background: #F5F0E6;
+    border: 0.25mm dashed var(--gold);
+  }
+  .pcard.custom-card .name { color: var(--burgundy); }
+  .pcard.custom-card .price { color: var(--gold); font-size: 9.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .pcard.custom-card .desc { color: #555; }
+  .pcard.custom-card li::before { background: var(--burgundy); }
+
+  /* Details splits: Why vs Add-ons */
+  .details-split {
+    display: flex; gap: 8mm; width: 100%; margin-top: 1mm;
+  }
+  .split-col { flex: 1; }
+  .split-col h3 {
+    font-family: var(--serif); font-size: 11pt; color: var(--black); margin-bottom: 1.5mm; font-weight: 500;
+  }
+  .split-col .goldrule { margin-bottom: 3.5mm; width: 15mm; }
+  
+  .addons-col .addon-subtitle {
+    font-size: 7.2pt;
+    font-style: italic;
+    color: #666;
+    margin-top: 1.5mm;
+    margin-bottom: 3.5mm;
+  }
+
+  .benefits-list { display: flex; flex-direction: column; gap: 2.2mm; }
+  .benefit-item { display: flex; align-items: center; gap: 2.5mm; }
+  .benefit-item .ic {
+    flex: none; width: 5.5mm; height: 5.5mm; border-radius: 50%;
+    border: 0.25mm solid #D6BE8F;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); background: #F6F2EB;
+  }
+  .benefit-item .ic svg { width: 3mm; height: 3mm; }
+  .benefit-item span { font-size: 7.8pt; font-weight: 600; color: #2b2b2b; }
+
+  .addons-grid-col { display: grid; grid-template-columns: 1fr; gap: 2.2mm; }
+  .addon-item { display: flex; align-items: baseline; gap: 2mm; }
+  .addon-item .plus { color: var(--gold); font-size: 8.5pt; font-weight: 600; font-family: var(--serif); }
+  .addon-item span:last-child { font-size: 7.6pt; font-weight: 500; color: #333; }
+
+  /* CTA Card (Gradient & box-shadow removed to prevent Chrome print overlay bug) */
+  .cta-card {
+    background: var(--black);
+    border-radius: 4mm; padding: 5.5mm 6mm;
+    text-align: center;
+    width: 100%; margin-top: 1mm;
+  }
+  .cta-text { width: 100%; }
+  .cta-text h3 {
+    font-family: var(--serif); font-weight: 400; font-style: italic;
+    font-size: 14pt; color: var(--ivory); line-height: 1.3; margin-bottom: 2mm;
+  }
+  .cta-text p { font-size: 7.8pt; color: #A09D97; margin-bottom: 4.5mm; }
+  
+  .contacts-grid {
+    display: flex;
+    justify-content: center;
+    gap: 10mm;
+    width: 100%;
+  }
+  .contact-row { display: flex; align-items: center; gap: 2mm; text-decoration: none; color: inherit; }
+  .contact-row svg { width: 3.6mm; height: 3.6mm; color: var(--gold); flex: none; }
+  .contact-row .val { font-size: 8pt; color: #D2CFC9; transition: color 0.2s ease; }
+  .contact-row:hover .val { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 : COVER & HOW IT WORKS ============ -->
+<div class="sheet cover-sheet">
+  
+  <div class="cover-header">
+    <img class="logo" src="logo.png" alt="BeatRoute Band">
+    <div class="brand-subtext">
+      <div class="line"></div>
+      <span class="micro">Custom Songs</span>
+      <div class="line"></div>
+    </div>
+    <div class="brand-byline">by BeatRoute Band</div>
+  </div>
+
+  <div class="cover-hero">
+    <h1>Every Story Deserves Its Own <em>Song.</em></h1>
+    <p class="sub">Original songs — written, composed and produced exclusively for your special moments by BeatRoute. We transform your memories into timeless music that you'll cherish forever.</p>
+    <div class="wave-block">
+      <svg viewBox="0 0 240 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,22 C8,22 10,14 16,14 S24,32 30,32 S38,8 46,8 S56,38 64,38 S72,18 78,18 S86,26 92,26 S100,4 110,4 S122,40 132,40 S140,16 148,16 S156,28 162,28 S170,10 178,10 S188,34 196,34 S204,20 210,20 S220,24 226,24 S234,22 240,22"
+              stroke="#8B7243" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="section how-it-works">
+    <h2 class="section-title"><span class="micro">How It Works</span></h2>
+    <div class="hiw-grid">
+      <div class="hiw-step">
+        <div class="num">1</div>
+        <div class="step-content">
+          <h4>Share Your Story</h4>
+          <p>Tell us about your occasion, memories and emotions.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="num">2</div>
+        <div class="step-content">
+          <h4>We Write &amp; Compose</h4>
+          <p>Our musicians create original lyrics and melodies for you.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="num">3</div>
+        <div class="step-content">
+          <h4>Studio Production</h4>
+          <p>Professional vocals, live instruments, mixing &amp; mastering.</p>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="num">4</div>
+        <div class="step-content">
+          <h4>Receive Your Song</h4>
+          <p>Delivered digitally in premium, studio-quality audio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section perfect-for">
+    <h2 class="section-title"><span class="micro">Perfect For</span></h2>
+    <div class="occasions-grid">
+      <span class="occ-tag">Proposals</span>
+      <span class="occ-tag">Weddings</span>
+      <span class="occ-tag">Anniversaries</span>
+      <span class="occ-tag">Birthdays</span>
+      <span class="occ-tag">Parents</span>
+      <span class="occ-tag">Siblings</span>
+      <span class="occ-tag">Spouses</span>
+      <span class="occ-tag">Friendships</span>
+      <span class="occ-tag">Farewell Gifts</span>
+      <span class="occ-tag">Valentine's Day</span>
+      <span class="occ-tag">Baby Showers</span>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <p class="micro">Custom Songwriting &nbsp;·&nbsp; Music Production</p>
+  </div>
+
+</div>
+
+
+<!-- ============ PAGE 2 : PACKAGES & DETAILS ============ -->
+<div class="sheet details-sheet">
+  
+  <div class="pricing-header">
+    <h2 class="section-title dark"><span class="micro">Choose Your Package</span></h2>
+    <div class="labelwave">
+      <svg viewBox="0 0 120 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,11 C5,11 6,6 10,6 S16,17 20,17 S26,4 32,4 S40,19 46,19 S52,9 58,9 S64,13 70,13 S76,2 84,2 S92,20 98,20 S104,11 110,11 L120,11"
+              stroke="#5A2435" stroke-width="1.1" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="packages-grid">
+    <!-- BASIC -->
+    <div class="pcard">
+      <div class="card-top">
+        <div class="head"><span class="name">Basic</span><span class="price">&#8377;7,000</span></div>
+        <p class="desc">A beautiful, acoustic song to capture your core memories.</p>
+        <ul>
+          <li>1-minute original song</li>
+          <li>Acoustic guitar or piano backing</li>
+          <li>Solo vocalist (Male or Female)</li>
+          <li>Personalized lyrics &amp; melody</li>
+          <li>Delivery within 7 days</li>
+          <li>Lyric approval before recording</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PRO (Featured) -->
+    <div class="pcard featured">
+      <div class="badge">MOST POPULAR</div>
+      <div class="card-top">
+        <div class="head"><span class="name">Pro</span><span class="price">&#8377;10,000</span></div>
+        <p class="desc">Enhanced arrangement with deeper musical layering.</p>
+        <ul>
+          <li>Up to 2-minute original song</li>
+          <li>Layered with dual instruments</li>
+          <li>Solo vocalist (Male or Female)</li>
+          <li>Professional mixing &amp; mastering</li>
+          <li>Delivery within 5 days</li>
+          <li>One round of song revisions</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ULTIMATE -->
+    <div class="pcard">
+      <div class="card-top">
+        <div class="head"><span class="name">Ultimate</span><span class="price">&#8377;15,000</span></div>
+        <p class="desc">Full studio cinematic production for the ultimate gift.</p>
+        <ul>
+          <li>Up to 3-minute original song</li>
+          <li>Rich multi-instrument arrangement</li>
+          <li>Male/Female duet option</li>
+          <li>Premium studio production</li>
+          <li>Priority 3-day delivery</li>
+          <li>Two rounds of song revisions</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CUSTOM -->
+    <div class="pcard custom-card">
+      <div class="card-top">
+        <div class="head"><span class="name">Custom</span><span class="price">Enquire</span></div>
+        <p class="desc">Tailored to your specific scale, vision and style.</p>
+        <ul>
+          <li>Custom song length &amp; structure</li>
+          <li>Full band or orchestral production</li>
+          <li>Multi-vocalist / choir backing</li>
+          <li>Special instrument requests</li>
+          <li>Express priority delivery options</li>
+          <li>Unlimited revisions &amp; support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="details-split">
+    <!-- Why Column -->
+    <div class="split-col why-beatroute">
+      <h3>Why BeatRoute Custom Songs?</h3>
+      <hr class="goldrule">
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <span>100% Original Songs</span>
+        </div>
+        <div class="benefit-item">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4L8 20l-5 1 1-5L17 3z"/></svg>
+          </div>
+          <span>Written Around Your Story</span>
+        </div>
+        <div class="benefit-item">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1"/><path d="M12 18v4"/></svg>
+          </div>
+          <span>Professional Studio Production</span>
+        </div>
+        <div class="benefit-item">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg>
+          </div>
+          <span>Experienced Musicians &amp; Singers</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Addons Column -->
+    <div class="split-col addons-col">
+      <h3>Optional Add-ons</h3>
+      <p class="addon-subtitle">Available at additional charges apart from the package plan.</p>
+      <hr class="goldrule">
+      <div class="addons-grid-col">
+        <div class="addon-item"><span class="plus">+</span><span>Extra Live Instruments</span></div>
+        <div class="addon-item"><span class="plus">+</span><span>Additional Vocalists</span></div>
+        <div class="addon-item"><span class="plus">+</span><span>Rush 48-Hour Delivery</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-card">
+    <div class="cta-text">
+      <h3>Let's Write Your Story Together.</h3>
+      <p>Reach out to us to start crafting your custom song:</p>
+      <div class="contacts-grid">
+        <a href="https://wa.me/918148066421" target="_blank" class="contact-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span class="val">+91 81480 66421</span>
+        </a>
+        <a href="https://www.instagram.com/beat.route_/" target="_blank" class="contact-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+          <span class="val">@beat.route_</span>
+        </a>
+        <a href="mailto:beatroutetheband@gmail.com" class="contact-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+          <span class="val">beatroutetheband@gmail.com</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
