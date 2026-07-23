@@ -270,7 +270,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
         </div>
         <h3 className="font-serif text-2xl font-bold text-brand-black mb-3">Booking Received!</h3>
         <p className="text-sm text-gray-500 max-w-sm mx-auto mb-8 leading-relaxed">
-          Thank you for choosing BeatRoute! We have received your song details. Our team will reach out to you via WhatsApp shortly to initiate the lyrics brainstorming.
+          Thank you for choosing Memoir by BeatRoute Band! We have received your song details. Our creative team will reach out to you via WhatsApp shortly to initiate the lyrics brainstorming.
         </p>
         <button 
           onClick={() => {

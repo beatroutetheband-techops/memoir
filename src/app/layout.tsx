@@ -15,8 +15,8 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "BeatRoute Originals — Custom Songs",
-  description: "Get a professionally written, composed, and produced custom song for your special moments.",
+  title: "Memoir by BeatRoute Band — Custom Songs",
+  description: "Memoir by BeatRoute Band: Get a professionally written, composed, and produced custom song for your special moments.",
 };
 
 export default function RootLayout({

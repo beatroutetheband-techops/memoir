@@ -50,7 +50,7 @@ export default function Home() {
           
           <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
             <span className="text-brand-gold text-xs font-bold tracking-widest uppercase border border-brand-gold/25 px-4 py-1.5 rounded-full bg-brand-gold/5">
-              Original Custom Songs
+              Memoir — Custom Songs by BeatRoute
             </span>
             
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-brand-ivory font-light leading-tight">
@@ -59,7 +59,7 @@ export default function Home() {
             </h1>
             
             <p className="text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed font-light">
-              We write, compose, and record fully customized studio-quality songs tailored to your personal memories, anniversaries, weddings, and milestones. Produced entirely by BeatRoute.
+              We write, compose, and record fully customized studio-quality songs tailored to your personal memories, anniversaries, weddings, and milestones. Memoir by BeatRoute Band.
             </p>
 
             <div className="pt-4 flex flex-wrap justify-center gap-4">
@@ -150,11 +150,11 @@ export default function Home() {
           <div className="space-y-2">
             <div className="flex items-center justify-center md:justify-start gap-3">
               <Image 
-                src="/logo.png" 
-                alt="BeatRoute Logo" 
-                width={100} 
-                height={30} 
-                className="h-7 w-auto object-contain"
+                src="/memoir-logo-horizontal.png" 
+                alt="Memoir by BeatRoute Band" 
+                width={180} 
+                height={45} 
+                className="h-8 w-auto object-contain"
               />
             </div>
             <p className="text-[10px] text-gray-400 max-w-xs">
@@ -190,7 +190,7 @@ export default function Home() {
           </div>
 
           <div className="text-[10px] text-gray-550 flex flex-col items-center md:items-end gap-1">
-            <span>&copy; {new Date().getFullYear()} BeatRoute Band. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} Memoir by BeatRoute Band. All rights reserved.</span>
             <Link href="/admin" className="hover:text-brand-gold text-[9px] uppercase tracking-wider text-gray-650 transition-colors">
               Admin Access
             </Link>

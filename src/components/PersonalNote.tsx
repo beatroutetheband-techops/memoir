@@ -26,7 +26,7 @@ export default function PersonalNote() {
           <div className="space-y-4 text-sm sm:text-base font-light text-gray-300 leading-relaxed">
             <p>
               Every love story, every childhood memory, and every milestone has its own rhythm. 
-              When we started BeatRoute, we didn't want to create another music service. We wanted to build a bridge between human emotions and timeless sound.
+              When we created <strong>Memoir by BeatRoute</strong>, we didn't want to build another generic music service. We wanted to build a bridge between human emotions and timeless sound.
             </p>
             <p>
               We don't use AI generators, stock templates, or pre-recorded loops. When you share your story with us, we sit down with our guitars and pianos, and we talk about the feelings behind your words. Then, we compose a melody that feels like your memories.
@@ -41,12 +41,11 @@ export default function PersonalNote() {
 
           {/* Signature */}
           <div className="pt-4 flex items-center gap-4 border-t border-brand-gold/10">
-            <div className="w-10 h-10 rounded-full bg-brand-burgundy/30 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-serif font-bold">
-              BR
+            <div className="w-10 h-10 rounded-full bg-brand-burgundy/30 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-serif font-bold text-xs">
+              M
             </div>
             <div>
-              <p className="text-xs font-semibold text-brand-ivory">The BeatRoute Artists</p>
-              <p className="text-[10px] text-gray-500">Jay, Joe & the Musician Collective</p>
+              <p className="text-xs font-semibold text-brand-ivory">The Memoir &amp; BeatRoute Artists</p>
             </div>
           </div>
         </div>

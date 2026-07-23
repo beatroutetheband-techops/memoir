@@ -14,16 +14,16 @@ export default function BrandHeader({ isAdmin = false }: BrandHeaderProps) {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-4 hover:opacity-90 transition-opacity">
           <Image 
-            src="/logo.png" 
-            alt="BeatRoute Logo" 
-            width={120} 
-            height={36} 
-            className="h-9 w-auto object-contain"
+            src="/memoir-logo-horizontal.png" 
+            alt="Memoir by BeatRoute Band" 
+            width={240} 
+            height={56} 
+            className="h-10 w-auto object-contain"
             priority
           />
-          <div className="hidden sm:block h-6 w-px bg-brand-gold/30"></div>
-          <div className="hidden sm:flex flex-col">
-            <span className="font-serif text-sm tracking-widest text-brand-gold font-bold uppercase">Custom Songs</span>
+          <div className="hidden md:block h-6 w-px bg-brand-gold/30"></div>
+          <div className="hidden md:flex flex-col">
+            <span className="font-serif text-xs tracking-widest text-brand-gold font-bold uppercase">Custom Songs</span>
             <span className="text-[10px] text-gray-400 tracking-wider">by BeatRoute Band</span>
           </div>
         </Link>
