@@ -133,13 +133,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
     setCustomState("");
   };
 
-  // Auto-scroll to wizard when package changes
-  useEffect(() => {
-    if (selectedPackage && step === 1) {
-      const el = document.getElementById("booking-start");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [selectedPackage]);
+
 
   // Calculate pricing breakdown
   const basePrice = selectedPackage ? planPrices[selectedPackage] : 0;

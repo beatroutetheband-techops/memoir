@@ -33,6 +33,7 @@ export default function Home() {
 
   const handleSelectPackage = (pkg: 'basic' | 'pro' | 'ultimate' | 'custom') => {
     setSelectedPackage(pkg);
+    document.getElementById("booking-start")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
