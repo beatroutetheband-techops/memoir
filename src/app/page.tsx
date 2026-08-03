@@ -191,9 +191,6 @@ export default function Home() {
 
           <div className="text-[10px] text-gray-550 flex flex-col items-center md:items-end gap-1">
             <span>&copy; {new Date().getFullYear()} Memoir by BeatRoute Band. All rights reserved.</span>
-            <Link href="/admin" className="hover:text-brand-gold text-[9px] uppercase tracking-wider text-gray-650 transition-colors">
-              Admin Access
-            </Link>
           </div>
 
         </div>
