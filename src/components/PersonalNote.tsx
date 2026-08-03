@@ -29,7 +29,7 @@ export default function PersonalNote() {
               When we created <strong>Memoir by BeatRoute</strong>, we didn't want to build another generic music service. We wanted to build a bridge between human emotions and timeless sound.
             </p>
             <p>
-              We don't use AI generators, stock templates, or pre-recorded loops. When you share your story with us, we sit down with our guitars and pianos, and we talk about the feelings behind your words. Then, we compose a melody that feels like your memories.
+              When you share your story with us, our musicians sit down to translate the feelings behind your words into sound. We compose and produce a tailored melody that captures your exact memories.
             </p>
             <p>
               Every lyric is penned by hand, every vocal is captured live in our studio, and every mix is polished with care. Because a letter can be misplaced and a gift can be forgotten. But a song?
