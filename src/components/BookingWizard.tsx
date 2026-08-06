@@ -61,7 +61,7 @@ interface Addon {
 const addonsList: Addon[] = [
   { id: "live_instruments", name: "Extra Live Instruments", price: 3000, desc: "Recording with live violin, flute, or percussion sessions" },
   { id: "duet_vocals", name: "Additional Vocalist (Duet)", price: 2500, desc: "Male/Female duet pairing for richer storytelling" },
-  { id: "rush_delivery", name: "Rush 48-Hour Delivery", price: 2000, desc: "Prioritized express mixing, mastering, and dispatch" }
+  { id: "rush_delivery", name: "Rush 48-Hour Delivery", price: 3000, desc: "Prioritized express mixing, mastering, and dispatch" }
 ];
 
 const planPrices = {
