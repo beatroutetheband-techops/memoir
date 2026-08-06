@@ -89,8 +89,7 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
         {packages.map((pkg) => (
           <div
             key={pkg.id}
-            onClick={() => onSelectPackage(pkg.id)}
-            className={`rounded-2xl p-6 transition-all duration-300 relative flex flex-col justify-between cursor-pointer group hover:scale-[1.02] border ${
+            className={`rounded-2xl p-6 transition-all duration-300 relative flex flex-col justify-between border ${
               pkg.isPopular
                 ? "bg-brand-burgundy text-brand-ivory border-brand-gold shadow-lg"
                 : selectedPackage === pkg.id
@@ -135,6 +134,8 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
 
             {/* Select Button */}
             <button
+              type="button"
+              onClick={() => onSelectPackage(pkg.id)}
               className={`w-full py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
                 pkg.isPopular
                   ? "bg-brand-gold hover:bg-brand-gold-muted text-brand-black"
