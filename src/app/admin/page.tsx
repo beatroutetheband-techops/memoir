@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { 
   Shield, LogOut, Search, Filter, Eye, MessageSquare, 
-  CheckCircle2, AlertCircle, Clock, Save, Edit3
+  CheckCircle2, AlertCircle, Clock, Save, Edit3, User, UserPlus, Users, Loader2
 } from "lucide-react";
 import BrandHeader from "@/components/BrandHeader";
 import { bookingService, Booking } from "@/services/bookingService";
+import { userService, UserProfile } from "@/services/userService";
+import { supabase } from "@/lib/supabaseClient";
 
 const planPrices = {
   basic: 7000,
@@ -38,10 +40,23 @@ const RupeeIcon = ({ size = 20, className = "" }: { size?: number; className?: s
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [filteredBookings, setFilteredBookings] = useState<Booking[]>([]);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   
+  // Team Management state
+  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
+  const [teamUsers, setTeamUsers] = useState<UserProfile[]>([]);
+  const [newEmail, setNewEmail] = useState("");
+  const [newFullName, setNewFullName] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newRole, setNewRole] = useState("admin");
+  const [createUserLoading, setCreateUserLoading] = useState(false);
+  const [createUserMsg, setCreateUserMsg] = useState("");
+  const [createUserErr, setCreateUserErr] = useState("");
+
   // Filters & Search
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -53,16 +68,48 @@ export default function AdminDashboard() {
   
   const router = useRouter();
 
-  // Authentication check
-  useEffect(() => {
-    const auth = sessionStorage.getItem("beatroute_admin_authenticated");
-    if (auth !== "true") {
-      router.push("/admin/login");
-    } else {
-      setIsAuthenticated(true);
-      loadBookings();
+  // Load user profile & team
+  const fetchUserProfile = async (userId: string) => {
+    const profile = await userService.getUserProfile(userId);
+    if (profile) {
+      setUserProfile(profile);
     }
-  }, []);
+  };
+
+  const loadTeamUsers = async () => {
+    const users = await userService.getAllUsers();
+    setTeamUsers(users);
+  };
+
+  // Authentication check with Supabase Auth & Users table sync
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        setIsAuthenticated(false);
+        router.push("/admin/login");
+      } else {
+        setIsAuthenticated(true);
+        setUserEmail(session.user.email || null);
+        fetchUserProfile(session.user.id);
+        loadBookings();
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        setIsAuthenticated(false);
+        router.push("/admin/login");
+      } else {
+        setIsAuthenticated(true);
+        setUserEmail(session.user.email || null);
+        fetchUserProfile(session.user.id);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router]);
 
   // Load data
   const loadBookings = async () => {
@@ -95,8 +142,8 @@ export default function AdminDashboard() {
     setFilteredBookings(result);
   }, [search, statusFilter, packageFilter, bookings]);
 
-  const handleLogout = () => {
-    sessionStorage.removeItem("beatroute_admin_authenticated");
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     router.push("/admin/login");
   };
 
@@ -119,6 +166,48 @@ export default function AdminDashboard() {
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const handleCreateUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCreateUserErr("");
+    setCreateUserMsg("");
+    setCreateUserLoading(true);
+
+    try {
+      const res = await fetch('/api/admin/create-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: newEmail,
+          password: newPassword,
+          full_name: newFullName,
+          role: newRole
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setCreateUserErr(data.error || 'Failed to create user');
+      } else {
+        setCreateUserMsg(`User ${newEmail} created successfully!`);
+        setNewEmail("");
+        setNewFullName("");
+        setNewPassword("");
+        await loadTeamUsers();
+      }
+    } catch (err: any) {
+      setCreateUserErr(err.message || 'Error creating user');
+    } finally {
+      setCreateUserLoading(false);
+    }
+  };
+
+  const handleOpenTeamModal = () => {
+    setIsTeamModalOpen(true);
+    setCreateUserErr("");
+    setCreateUserMsg("");
+    loadTeamUsers();
   };
 
   if (isAuthenticated === null) {
@@ -160,13 +249,31 @@ export default function AdminDashboard() {
             <p className="text-xs text-gray-400 mt-1">Monitor intake pipelines, coordinate session vocals, and oversee song deliveries.</p>
           </div>
           
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 border border-rose-500/35 hover:bg-rose-950/20 text-rose-400 px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer"
-          >
-            <LogOut size={14} />
-            Sign Out
-          </button>
+          <div className="flex items-center gap-3">
+            {(userProfile || userEmail) && (
+              <span className="hidden sm:flex items-center gap-2 bg-zinc-900 border border-brand-gold/20 text-brand-gold text-[11px] font-medium px-3 py-1.5 rounded-xl">
+                <User size={13} />
+                <span>{userProfile?.full_name || userEmail}</span>
+                <span className="text-[9px] uppercase font-bold bg-brand-gold/10 text-brand-gold px-1.5 py-0.5 rounded border border-brand-gold/20">
+                  {userProfile?.role || 'admin'}
+                </span>
+              </span>
+            )}
+            <button
+              onClick={handleOpenTeamModal}
+              className="flex items-center gap-1.5 border border-brand-gold/30 hover:bg-brand-gold/10 text-brand-gold px-3.5 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer"
+            >
+              <Users size={14} />
+              Manage Team
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 border border-rose-500/35 hover:bg-rose-950/20 text-rose-400 px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer"
+            >
+              <LogOut size={14} />
+              Sign Out
+            </button>
+          </div>
         </div>
 
         {/* METRIC CARD STATS GRID (Revamped with dark-glowing blocks) */}
@@ -477,6 +584,181 @@ export default function AdminDashboard() {
                 >
                   <Save size={14} />
                   Save Changes
+                </button>
+              </div>
+
+            </div>
+          </div>
+        )}
+
+        {/* TEAM USERS MANAGEMENT MODAL */}
+        {isTeamModalOpen && (
+          <div className="fixed inset-0 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4 z-[100] animate-fade-in">
+            <div className="bg-[#151518] border border-zinc-800 rounded-2xl max-w-2xl w-full max-h-[88vh] overflow-y-auto shadow-2xl flex flex-col justify-between text-brand-ivory">
+              
+              {/* Modal Header */}
+              <div className="bg-zinc-950 px-6 py-4.5 flex justify-between items-center border-b border-zinc-800">
+                <div className="flex items-center gap-2">
+                  <Users size={20} className="text-brand-gold" />
+                  <div>
+                    <span className="text-brand-gold text-[9px] uppercase font-bold tracking-wider block">Access &amp; Security Control</span>
+                    <h4 className="font-serif text-lg font-bold text-brand-ivory">Team Administration</h4>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsTeamModalOpen(false)}
+                  className="text-gray-400 hover:text-white text-xl font-bold px-2 focus:outline-none cursor-pointer"
+                >
+                  &times;
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 space-y-6">
+                
+                {/* Form to create a new admin user */}
+                <div className="bg-zinc-950 border border-brand-gold/20 rounded-xl p-5 space-y-4">
+                  <h5 className="text-xs font-bold uppercase tracking-wider text-brand-gold flex items-center gap-1.5">
+                    <UserPlus size={14} />
+                    Register New Team User
+                  </h5>
+
+                  <form onSubmit={handleCreateUser} className="space-y-3.5">
+                    {createUserErr && (
+                      <div className="bg-rose-950/40 text-rose-300 border border-rose-900/50 rounded-xl p-3 text-xs flex items-start gap-2">
+                        <AlertCircle size={15} className="flex-none mt-0.5" />
+                        <span>{createUserErr}</span>
+                      </div>
+                    )}
+
+                    {createUserMsg && (
+                      <div className="bg-emerald-950/40 text-emerald-300 border border-emerald-900/50 rounded-xl p-3 text-xs flex items-start gap-2">
+                        <CheckCircle2 size={15} className="flex-none mt-0.5" />
+                        <span>{createUserMsg}</span>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="flex flex-col gap-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Full Name</label>
+                        <input
+                          type="text"
+                          value={newFullName}
+                          onChange={(e) => setNewFullName(e.target.value)}
+                          placeholder="e.g. Karthik Violinist"
+                          className="bg-zinc-900 border border-zinc-800 text-brand-ivory text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-brand-gold"
+                          required
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Email Address</label>
+                        <input
+                          type="email"
+                          value={newEmail}
+                          onChange={(e) => setNewEmail(e.target.value)}
+                          placeholder="producer@beatroute.com"
+                          className="bg-zinc-900 border border-zinc-800 text-brand-ivory text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-brand-gold"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="flex flex-col gap-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Password</label>
+                        <input
+                          type="password"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          placeholder="••••••••"
+                          className="bg-zinc-900 border border-zinc-800 text-brand-ivory text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-brand-gold"
+                          required
+                          minLength={6}
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-1">
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wide">Role</label>
+                        <select
+                          value={newRole}
+                          onChange={(e) => setNewRole(e.target.value)}
+                          className="bg-zinc-900 border border-zinc-800 text-brand-ivory text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-brand-gold"
+                        >
+                          <option value="admin">Admin</option>
+                          <option value="producer">Producer</option>
+                          <option value="engineer">Audio Engineer</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={createUserLoading}
+                      className="w-full bg-brand-gold hover:bg-brand-gold-muted text-brand-black text-xs font-bold uppercase tracking-wider py-2.5 rounded-xl shadow transition-colors cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50"
+                    >
+                      {createUserLoading ? (
+                        <>
+                          <Loader2 size={14} className="animate-spin" />
+                          Creating Account...
+                        </>
+                      ) : (
+                        <>
+                          <UserPlus size={14} />
+                          Add User to Team
+                        </>
+                      )}
+                    </button>
+                  </form>
+                </div>
+
+                {/* List of Registered Team Users */}
+                <div className="space-y-3">
+                  <h5 className="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+                    <Users size={14} />
+                    Active Team Accounts ({teamUsers.length})
+                  </h5>
+
+                  <div className="border border-zinc-800 rounded-xl overflow-hidden bg-zinc-950">
+                    <table className="w-full text-left text-xs">
+                      <thead>
+                        <tr className="bg-zinc-900 text-[10px] uppercase font-bold text-gray-400 border-b border-zinc-800">
+                          <th className="px-4 py-2.5">User</th>
+                          <th className="px-4 py-2.5">Role</th>
+                          <th className="px-4 py-2.5">Created</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-800/60">
+                        {teamUsers.map((u) => (
+                          <tr key={u.id} className="hover:bg-zinc-900/40">
+                            <td className="px-4 py-2.5">
+                              <div className="font-semibold text-brand-ivory">{u.full_name || 'N/A'}</div>
+                              <div className="text-[11px] text-gray-400">{u.email}</div>
+                            </td>
+                            <td className="px-4 py-2.5">
+                              <span className="bg-brand-gold/10 text-brand-gold border border-brand-gold/20 text-[9px] uppercase font-bold px-2 py-0.5 rounded">
+                                {u.role}
+                              </span>
+                            </td>
+                            <td className="px-4 py-2.5 text-gray-400 text-[11px]">
+                              {new Date(u.created_at).toLocaleDateString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Modal Footer */}
+              <div className="bg-zinc-950 border-t border-zinc-800 px-6 py-4 flex justify-end">
+                <button
+                  onClick={() => setIsTeamModalOpen(false)}
+                  className="px-4 py-2 border border-zinc-800 hover:bg-zinc-900/50 text-gray-400 hover:text-white rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  Close
                 </button>
               </div>
 

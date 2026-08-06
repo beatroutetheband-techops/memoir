@@ -1,3 +1,5 @@
+import { supabase } from '@/lib/supabaseClient';
+
 export interface Booking {
   id: string;
   created_at: string;
@@ -16,116 +18,95 @@ export interface Booking {
   admin_notes?: string;
 }
 
-const STORAGE_KEY = 'beatroute_bookings';
-
-const initialMockBookings: Booking[] = [
-  {
-    id: 'b1',
-    created_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    client_name: "Rajesh Kumar",
-    whatsapp: "+91 98765 43210",
-    location: "Chennai, Tamil Nadu",
-    package_name: 'basic',
-    language: "Tamil",
-    occasion: "Anniversary",
-    occasion_date: "2026-08-15",
-    relationship_history: "We met in college 8 years ago. Married for 5 years now.",
-    favorite_memories: "Our first trip together to Ooty where it rained all day. She loves acoustic violin notes.",
-    selected_addons: [],
-    total_price: 7000,
-    status: 'pending',
-    admin_notes: "Assigning acoustic guitar track to Karthik."
-  },
-  {
-    id: 'b2',
-    created_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    client_name: "Priya Sharma",
-    whatsapp: "+91 81234 56789",
-    location: "Mumbai, Maharashtra",
-    package_name: 'pro',
-    language: "Hindi",
-    occasion: "Spouses",
-    occasion_date: "2026-07-28",
-    relationship_history: "Met at our workplace during a training program. Love at first sight.",
-    favorite_memories: "He loves black coffee and reading. Want a warm soulful track with guitar and keys.",
-    selected_addons: ["Rush 48-Hour Delivery"],
-    total_price: 12000, // 10000 + 2000
-    status: 'in_production',
-    admin_notes: "Vocals tracking scheduled for tonight. Rush order."
-  },
-  {
-    id: 'b3',
-    created_at: new Date().toISOString(),
-    client_name: "Sneha Nair",
-    whatsapp: "+91 94460 12345",
-    location: "Kochi, Kerala",
-    package_name: 'ultimate',
-    language: "Malayalam",
-    occasion: "Birthday",
-    occasion_date: "2026-08-02",
-    relationship_history: "My brother's 30th birthday. He is a huge fan of classic bands.",
-    favorite_memories: "He is always playing guitar and singing. We want a rich cinematic track with duet vocals.",
-    selected_addons: ["Extra Live Instruments"],
-    total_price: 18000, // 15000 + 3000
-    status: 'completed',
-    admin_notes: "Finished mix and master. Delivered package via email."
-  }
-];
-
 export const bookingService = {
-  // Initialize storage with mock data if empty
-  initialize: (): Booking[] => {
-    if (typeof window === 'undefined') return [];
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialMockBookings));
-      return initialMockBookings;
-    }
-    return JSON.parse(stored);
-  },
-
-  // Get all bookings
+  // Get all bookings from Supabase
   getBookings: async (): Promise<Booking[]> => {
-    if (typeof window === 'undefined') return initialMockBookings;
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : bookingService.initialize();
+    try {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching bookings from Supabase:', error);
+        return [];
+      }
+
+      return (data || []).map((item) => ({
+        ...item,
+        selected_addons: Array.isArray(item.selected_addons) ? item.selected_addons : []
+      })) as Booking[];
+    } catch (err) {
+      console.error('Unexpected error fetching bookings:', err);
+      return [];
+    }
   },
 
-  // Get a single booking
+  // Get a single booking by ID
   getBooking: async (id: string): Promise<Booking | null> => {
-    const bookings = await bookingService.getBookings();
-    return bookings.find(b => b.id === id) || null;
+    try {
+      const { data, error } = await supabase
+        .from('bookings')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error || !data) {
+        console.error('Error fetching single booking:', error);
+        return null;
+      }
+
+      return {
+        ...data,
+        selected_addons: Array.isArray(data.selected_addons) ? data.selected_addons : []
+      } as Booking;
+    } catch (err) {
+      console.error('Unexpected error fetching booking:', err);
+      return null;
+    }
   },
 
-  // Create a new booking
+  // Create a new booking in Supabase
   createBooking: async (bookingData: Omit<Booking, 'id' | 'created_at' | 'status'>): Promise<Booking> => {
-    const bookings = await bookingService.getBookings();
-    const newBooking: Booking = {
+    const payload = {
       ...bookingData,
-      id: 'b_' + Math.random().toString(36).substr(2, 9),
-      created_at: new Date().toISOString(),
       status: 'pending'
     };
-    
-    bookings.unshift(newBooking);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-    return newBooking;
+
+    const { data, error } = await supabase
+      .from('bookings')
+      .insert([payload])
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating booking in Supabase:', error);
+      throw new Error(error.message || 'Failed to submit booking');
+    }
+
+    return {
+      ...data,
+      selected_addons: Array.isArray(data.selected_addons) ? data.selected_addons : []
+    } as Booking;
   },
 
-  // Update status or notes
+  // Update status or notes in Supabase
   updateBooking: async (id: string, updates: Partial<Pick<Booking, 'status' | 'admin_notes'>>): Promise<Booking> => {
-    const bookings = await bookingService.getBookings();
-    const index = bookings.findIndex(b => b.id === id);
-    if (index === -1) {
-      throw new Error('Booking not found');
+    const { data, error } = await supabase
+      .from('bookings')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating booking in Supabase:', error);
+      throw new Error(error.message || 'Failed to update booking');
     }
-    
-    bookings[index] = {
-      ...bookings[index],
-      ...updates
-    };
-    
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
-    return bookings[index];
+
+    return {
+      ...data,
+      selected_addons: Array.isArray(data.selected_addons) ? data.selected_addons : []
+    } as Booking;
   }
 };
