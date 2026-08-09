@@ -370,7 +370,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
             <div 
               className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                 s === step 
-                  ? "bg-brand-burgundy text-white border border-brand-gold/30 scale-105" 
+                  ? "bg-[#0A0A0D] text-brand-gold border border-brand-gold scale-105 shadow-sm" 
                   : s < step 
                   ? "bg-brand-gold text-brand-black" 
                   : "bg-gray-200 text-gray-500"
