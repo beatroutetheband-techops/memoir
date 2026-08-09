@@ -52,7 +52,6 @@ export default function Home() {
           
           <div className="max-w-4xl mx-auto text-center relative z-10 space-y-7">
             <div className="inline-flex items-center gap-2 bg-brand-gold/10 border border-brand-gold/25 px-4 py-1.5 rounded-full backdrop-blur-sm">
-              <Sparkles size={14} className="text-brand-gold" />
               <span className="text-brand-gold text-xs font-bold tracking-widest uppercase">
                 Memoir by BeatRoute Band
               </span>
