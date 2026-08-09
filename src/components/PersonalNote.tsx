@@ -4,23 +4,22 @@ import { Heart, Music, Sparkles } from "lucide-react";
 
 export default function PersonalNote() {
   return (
-    <div className="bg-brand-black text-brand-ivory border border-brand-gold/20 rounded-2xl p-8 md:p-12 max-w-5xl mx-auto shadow-2xl relative overflow-hidden">
-      {/* Background radial gradients for a luxury glow */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle_at_top_right,#5A243545_0%,transparent_70%)] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[radial-gradient(circle_at_bottom_left,#C8A96A15_0%,transparent_70%)] pointer-events-none"></div>
+    <div className="bg-[#121217] text-brand-ivory border border-brand-gold/20 rounded-2xl p-8 md:p-12 max-w-5xl mx-auto shadow-2xl relative overflow-hidden">
+      {/* Background radial gradient accent (Minimal Warm Gold Glow) */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle_at_top_right,rgba(200,169,106,0.08)_0%,transparent_70%)] pointer-events-none"></div>
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* Letter Column */}
         <div className="lg:col-span-7 space-y-6">
           <div className="flex items-center gap-2">
-            <span className="text-brand-gold text-[10px] uppercase font-bold tracking-widest bg-brand-gold/5 border border-brand-gold/20 px-3 py-1 rounded-full">
+            <span className="text-brand-gold text-[10px] uppercase font-bold tracking-widest bg-brand-gold/10 border border-brand-gold/25 px-3 py-1 rounded-full">
               From Our Hearts to Yours
             </span>
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-brand-ivory leading-tight">
             Why We Write <br className="hidden sm:inline" />
-            <span className="italic text-brand-gold font-normal">Custom Songs.</span>
+            <span className="italic gold-gradient-text font-normal">Custom Songs.</span>
           </h2>
 
           <div className="space-y-4 text-sm sm:text-base font-light text-gray-300 leading-relaxed">
@@ -40,8 +39,8 @@ export default function PersonalNote() {
           </div>
 
           {/* Signature */}
-          <div className="pt-4 flex items-center gap-4 border-t border-brand-gold/10">
-            <div className="w-10 h-10 rounded-full bg-brand-burgundy/30 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-serif font-bold text-xs">
+          <div className="pt-4 flex items-center gap-4 border-t border-brand-gold/15">
+            <div className="w-10 h-10 rounded-full bg-zinc-900 border border-brand-gold/30 flex items-center justify-center text-brand-gold font-serif font-bold text-xs">
               M
             </div>
             <div>
@@ -51,7 +50,7 @@ export default function PersonalNote() {
         </div>
 
         {/* Our Promise & Checklist Column */}
-        <div className="lg:col-span-5 bg-zinc-950/60 border border-zinc-800/80 rounded-xl p-6 md:p-8 space-y-6">
+        <div className="lg:col-span-5 bg-zinc-950/80 border border-zinc-800/80 rounded-xl p-6 md:p-8 space-y-6">
           <h3 className="font-serif text-lg font-bold text-brand-gold flex items-center gap-2">
             <Sparkles size={16} />
             <span>Our Creative Promise</span>
@@ -64,7 +63,7 @@ export default function PersonalNote() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-brand-ivory mb-1">Handcrafted Melodies</h4>
-                <p className="text-[11px] text-gray-405 leading-relaxed">
+                <p className="text-[11px] text-gray-400 leading-relaxed">
                   Real instruments and live vocals. Your song is created from scratch by professional artists.
                 </p>
               </div>
@@ -76,7 +75,7 @@ export default function PersonalNote() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-brand-ivory mb-1">Empathy First</h4>
-                <p className="text-[11px] text-gray-405 leading-relaxed">
+                <p className="text-[11px] text-gray-400 leading-relaxed">
                   We read every story detail. We match the genre, tempo, and vocal tone to the emotion of your message.
                 </p>
               </div>
@@ -88,7 +87,7 @@ export default function PersonalNote() {
               </div>
               <div>
                 <h4 className="text-xs font-bold text-brand-ivory mb-1">Keep It Simple</h4>
-                <p className="text-[11px] text-gray-405 leading-relaxed">
+                <p className="text-[11px] text-gray-400 leading-relaxed">
                   No hidden fees. Revisions are built-in, and we send you the lyric draft to check before we record.
                 </p>
               </div>
@@ -98,7 +97,7 @@ export default function PersonalNote() {
           <div className="pt-2">
             <a 
               href="#booking-section"
-              className="w-full py-3 bg-brand-gold hover:bg-brand-gold-muted text-brand-black text-[11px] font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+              className="w-full py-3 gold-gradient-btn text-brand-black text-[11px] font-bold uppercase tracking-widest rounded-lg flex items-center justify-center gap-2 shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
             >
               <span>Let's Write Your Song</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-3 h-3"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>

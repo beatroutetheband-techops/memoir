@@ -397,7 +397,7 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4.5">
                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border mr-2 ${
                         b.package_name === 'pro' 
-                          ? 'bg-brand-burgundy/25 text-brand-gold border-brand-gold/30'
+                          ? 'bg-brand-gold/10 text-brand-gold border-brand-gold/30'
                           : b.package_name === 'ultimate'
                           ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
                           : b.package_name === 'custom'
@@ -428,7 +428,7 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4.5 text-center">
                       <button
                         onClick={() => handleOpenDetails(b)}
-                        className="bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-ivory px-3.5 py-2 rounded-xl font-semibold uppercase tracking-wider flex items-center gap-1.5 mx-auto cursor-pointer transition-colors"
+                        className="gold-gradient-btn text-brand-black px-3.5 py-2 rounded-xl font-bold uppercase tracking-wider flex items-center gap-1.5 mx-auto cursor-pointer transition-transform hover:scale-[1.02]"
                       >
                         <Eye size={12} />
                         View
@@ -580,7 +580,7 @@ export default function AdminDashboard() {
 
                 <button
                   onClick={handleSaveNotesAndStatus}
-                  className="px-5 py-2 bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-ivory rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-5 py-2 gold-gradient-btn text-brand-black rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-transform hover:scale-[1.02] cursor-pointer"
                 >
                   <Save size={14} />
                   Save Changes

@@ -1,24 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-black: #111111;
-  --color-brand-ivory: #F8F5F0;
+  --color-brand-black: #0A0A0D;
+  --color-brand-onyx: #121217;
+  --color-brand-card: #181820;
+  --color-brand-ivory: #FAF9F6;
+  --color-brand-cream: #F3F1EA;
   --color-brand-gold: #C8A96A;
-  --color-brand-gold-muted: #9D804B;
-  --color-brand-burgundy: #5A2435;
-  --color-brand-burgundy-light: #833B51;
+  --color-brand-gold-bright: #E5C88B;
+  --color-brand-gold-muted: #9E824C;
+  --color-brand-gray: #71717A;
   
   --font-serif: var(--font-playfair);
   --font-sans: var(--font-poppins);
 }
 
 :root {
-  --background: #F8F5F0;
-  --foreground: #111111;
+  --background: #FAF9F6;
+  --foreground: #0A0A0D;
+}
+
+::selection {
+  background-color: #C8A96A;
+  color: #0A0A0D;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Minimalist luxury gradients and subtle glow utilities */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FAF9F6 0%, #C8A96A 60%, #9E824C 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-gradient-btn {
+  background: linear-gradient(135deg, #E5C88B 0%, #C8A96A 60%, #A88746 100%);
+}
+
+.gold-glow {
+  box-shadow: 0 0 30px -8px rgba(200, 169, 106, 0.25);
 }

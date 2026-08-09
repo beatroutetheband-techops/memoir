@@ -57,11 +57,11 @@ export default function AdminLogin() {
         {/* Header Logo */}
         <div className="text-center">
           <Image 
-            src="/logo.png" 
-            alt="BeatRoute Logo" 
-            width={160} 
-            height={50} 
-            className="mx-auto h-12 w-auto object-contain mb-3"
+            src="/memoir.png" 
+            alt="Memoir by BeatRoute Logo" 
+            width={200} 
+            height={60} 
+            className="mx-auto h-12 w-auto object-contain mb-3 brightness-105"
             priority
           />
           <span className="text-brand-gold text-[10px] uppercase font-bold tracking-widest block">

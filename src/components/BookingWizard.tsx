@@ -287,7 +287,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
               selected_addons: []
             });
           }}
-          className="bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-ivory text-xs uppercase tracking-widest px-6 py-3 rounded-xl font-bold shadow-md cursor-pointer transition-colors"
+          className="gold-gradient-btn text-brand-black text-xs uppercase tracking-widest px-6 py-3 rounded-xl font-bold shadow-md cursor-pointer transition-transform hover:scale-[1.02]"
         >
           Book Another Song
         </button>
@@ -312,7 +312,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
         </div>
         {selectedPackage && (
           <div className="flex items-center gap-2 bg-brand-gold text-brand-black px-3 py-1.5 rounded-full text-xs font-bold shadow-md">
-            <span className="w-2 h-2 rounded-full bg-brand-burgundy animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-brand-black animate-pulse"></span>
             <span className="uppercase tracking-wider">{planDetails[selectedPackage].title} Plan</span>
             <span className="opacity-70 font-normal">({planDetails[selectedPackage].priceDisplay})</span>
           </div>
@@ -321,7 +321,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
 
       {/* Prominent Selected Plan Banner */}
       {selectedPackage ? (
-        <div className="bg-gradient-to-r from-zinc-900 via-brand-burgundy/90 to-zinc-900 text-brand-ivory px-6 py-4 border-b border-brand-gold/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
+        <div className="bg-[#121217] text-brand-ivory px-6 py-4 border-b border-brand-gold/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
           <div className="flex items-center gap-3.5">
             <div className="w-11 h-11 rounded-xl bg-brand-gold text-brand-black flex items-center justify-center font-bold font-serif text-xl shadow-md flex-shrink-0">
               {selectedPackage.charAt(0).toUpperCase()}
@@ -524,8 +524,8 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
                     onClick={() => handleChange("language", lang)}
                     className={`py-2 px-3 border text-xs rounded-xl font-medium cursor-pointer transition-all duration-200 ${
                       form.language === lang 
-                        ? "bg-brand-burgundy text-brand-ivory border-brand-burgundy" 
-                        : "bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-350"
+                        ? "bg-brand-black text-brand-gold border-brand-gold font-bold shadow-sm" 
+                        : "bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-gold/40"
                     }`}
                   >
                     {lang}
@@ -545,7 +545,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
                     onClick={() => handleChange("occasion", occ)}
                     className={`py-2 px-3 border text-xs rounded-xl font-medium cursor-pointer transition-all duration-200 ${
                       form.occasion === occ 
-                        ? "bg-brand-burgundy text-brand-ivory border-brand-burgundy" 
+                        ? "bg-brand-black text-brand-gold border-brand-gold font-bold shadow-sm" 
                         : "bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-350"
                     }`}
                   >
@@ -636,7 +636,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
                     onClick={() => handleToggleAddon(addon.id)}
                     className={`border rounded-xl p-3.5 flex items-center justify-between cursor-pointer transition-all duration-200 ${
                       isChecked 
-                        ? "bg-brand-burgundy/5 border-brand-gold" 
+                        ? "bg-brand-gold/10 border-brand-gold" 
                         : "bg-white border-gray-200 hover:border-gray-300"
                     }`}
                   >
@@ -646,7 +646,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
                           type="checkbox"
                           checked={isChecked}
                           onChange={() => {}} // Handled by div click
-                          className="accent-brand-burgundy h-4 w-4 rounded pointer-events-none"
+                          className="accent-brand-gold h-4 w-4 rounded pointer-events-none"
                         />
                       </div>
                       <div className="text-left">
@@ -654,7 +654,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
                         <span className="text-[10px] text-gray-400 block leading-normal mt-0.5">{addon.desc}</span>
                       </div>
                     </div>
-                    <span className="text-xs font-sans font-semibold tracking-wide text-brand-burgundy flex-none pl-3">
+                    <span className="text-xs font-sans font-semibold tracking-wide text-brand-gold-muted flex-none pl-3">
                       +₹{addon.price.toLocaleString("en-IN")}
                     </span>
                   </div>
@@ -669,9 +669,9 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
           <div className="space-y-6">
             
             {/* Intro Notice */}
-            <div className="bg-brand-burgundy/5 border border-brand-burgundy/15 rounded-xl p-4">
-              <h5 className="font-serif text-sm font-bold text-brand-burgundy flex items-center gap-2">
-                <FileText size={16} />
+            <div className="bg-brand-gold/10 border border-brand-gold/25 rounded-xl p-4">
+              <h5 className="font-serif text-sm font-bold text-brand-black flex items-center gap-2">
+                <FileText size={16} className="text-brand-gold-muted" />
                 <span>Review Your Song Booking Details</span>
               </h5>
               <p className="text-xs text-gray-600 mt-1 leading-relaxed">
@@ -709,7 +709,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                 <div>
                   <span className="text-gray-400 block mb-0.5 font-medium">Occasion</span>
-                  <span className="font-bold text-brand-burgundy">{form.occasion}</span>
+                  <span className="font-bold text-brand-gold-muted">{form.occasion}</span>
                 </div>
                 <div>
                   <span className="text-gray-400 block mb-0.5 font-medium">Language</span>
@@ -821,7 +821,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
           ) : (
             <button
               type="submit"
-              className="px-6 py-2.5 bg-brand-burgundy hover:bg-brand-burgundy-light text-brand-ivory rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-md hover:scale-[1.01] cursor-pointer"
+              className="px-6 py-2.5 gold-gradient-btn text-brand-black rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-md hover:scale-[1.01] cursor-pointer"
             >
               Confirm &amp; Book Song
               <ChevronRight size={14} />

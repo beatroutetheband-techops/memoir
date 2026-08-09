@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Music, Shield } from "lucide-react";
+import { Music } from "lucide-react";
 
 interface BrandHeaderProps {
   isAdmin?: boolean;
@@ -10,35 +10,42 @@ interface BrandHeaderProps {
 
 export default function BrandHeader({ isAdmin = false }: BrandHeaderProps) {
   return (
-    <header className="bg-brand-black text-brand-ivory border-b border-brand-gold/20 py-4 px-6 sticky top-0 z-50">
+    <header className="bg-[#0A0A0D]/90 backdrop-blur-md text-brand-ivory border-b border-brand-gold/20 py-3.5 px-6 sticky top-0 z-50 shadow-md">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-4 hover:opacity-90 transition-opacity">
+        
+        {/* Brand Logos: Memoir + BeatRoute */}
+        <Link href="/" className="flex items-center gap-3.5 hover:opacity-90 transition-opacity">
           <Image 
-            src="/memoir-logo-horizontal.png" 
-            alt="Memoir by BeatRoute Band" 
-            width={240} 
-            height={56} 
-            className="h-10 w-auto object-contain"
+            src="/memoir.png" 
+            alt="Memoir Logo" 
+            width={160} 
+            height={50} 
+            className="h-9 w-auto object-contain brightness-105"
             priority
           />
-          <div className="hidden md:block h-6 w-px bg-brand-gold/30"></div>
-          <div className="hidden md:flex flex-col">
-            <span className="font-serif text-xs tracking-widest text-brand-gold font-bold uppercase">Custom Songs</span>
-            <span className="text-[10px] text-gray-400 tracking-wider">by BeatRoute Band</span>
-          </div>
+          <div className="h-4 w-px bg-brand-gold/30"></div>
+          <Image 
+            src="/logo.png" 
+            alt="BeatRoute Logo" 
+            width={110} 
+            height={36} 
+            className="h-6 w-auto object-contain opacity-90"
+            priority
+          />
         </Link>
 
+        {/* Navigation */}
         <nav className="flex items-center gap-6">
           {isAdmin ? (
             <>
               <Link 
                 href="/" 
-                className="text-xs sm:text-sm font-medium tracking-wider hover:text-brand-gold transition-colors flex items-center gap-1.5"
+                className="text-xs sm:text-sm font-medium tracking-wider text-brand-ivory hover:text-brand-gold transition-colors flex items-center gap-1.5"
               >
-                <Music size={15} />
+                <Music size={15} className="text-brand-gold" />
                 User Portal
               </Link>
-              <span className="bg-brand-gold/10 text-brand-gold border border-brand-gold/30 px-2.5 py-0.5 rounded text-[10px] tracking-widest font-semibold uppercase">
+              <span className="bg-brand-gold/10 text-brand-gold border border-brand-gold/30 px-3 py-1 rounded-full text-[10px] tracking-widest font-bold uppercase shadow-sm">
                 Admin Area
               </span>
             </>
@@ -46,7 +53,7 @@ export default function BrandHeader({ isAdmin = false }: BrandHeaderProps) {
             <>
               <a 
                 href="#packages" 
-                className="text-xs sm:text-sm font-medium tracking-wider hover:text-brand-gold transition-colors"
+                className="text-xs sm:text-sm font-semibold tracking-wider text-brand-gold hover:text-brand-ivory transition-colors px-4 py-2 rounded-xl bg-brand-gold/10 border border-brand-gold/25 hover:border-brand-gold/50 cursor-pointer"
               >
                 View Plans
               </a>
