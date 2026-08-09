@@ -9,12 +9,28 @@ interface BrandHeaderProps {
 }
 
 export default function BrandHeader({ isAdmin = false }: BrandHeaderProps) {
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window !== "undefined" && window.location.pathname === "/") {
+      e.preventDefault();
+      const heroElement = document.getElementById("hero");
+      if (heroElement) {
+        heroElement.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <header className="bg-[#0A0A0D]/90 backdrop-blur-md text-brand-ivory border-b border-brand-gold/20 py-3.5 px-6 sticky top-0 z-50 shadow-md">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         
         {/* Brand Logos: Memoir + BeatRoute */}
-        <Link href="/" className="flex items-center gap-3.5 hover:opacity-90 transition-opacity">
+        <Link 
+          href="/#hero" 
+          onClick={handleLogoClick}
+          className="flex items-center gap-3.5 hover:opacity-90 transition-opacity cursor-pointer"
+        >
           <Image 
             src="/memoir.png" 
             alt="Memoir Logo" 

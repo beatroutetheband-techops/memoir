@@ -45,7 +45,7 @@ export default function Home() {
       <main className="flex-grow">
         
         {/* HERO SECTION - Minimal, Modern & Impressive */}
-        <section className="bg-[#0A0A0D] text-brand-ivory py-20 md:py-28 px-4 relative overflow-hidden">
+        <section id="hero" className="bg-[#0A0A0D] text-brand-ivory py-20 md:py-28 px-4 relative overflow-hidden">
           {/* Subtle Ambient Radial Highlight: #C8A96A at 8% opacity */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[380px] bg-[radial-gradient(circle,rgba(200,169,106,0.08)_0%,transparent_70%)] pointer-events-none blur-3xl"></div>
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(200,169,106,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(200,169,106,0.04)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
