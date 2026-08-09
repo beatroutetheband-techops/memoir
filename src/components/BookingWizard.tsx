@@ -296,7 +296,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
   }
 
   return (
-    <div id="booking-start" className="bg-white border border-gray-150 rounded-2xl max-w-3xl mx-auto overflow-hidden shadow-sm">
+    <div id="booking-start" className="bg-white border border-brand-gold/40 rounded-2xl max-w-3xl mx-auto overflow-hidden shadow-md">
       
       {/* Wizard Header Progress Bar */}
       <div className="bg-brand-black text-brand-ivory px-6 py-4 flex items-center justify-between border-b border-brand-gold/10">
@@ -364,7 +364,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
       )}
 
       {/* Progress Dots */}
-      <div className="bg-gray-50 border-b border-gray-100 py-3.5 px-6 flex justify-between">
+      <div className="bg-gray-50 border-b border-brand-gold/20 py-3.5 px-6 flex justify-between">
         {[1, 2, 3, 4, 5].map((s) => (
           <div key={s} className="flex items-center flex-1 last:flex-none">
             <div 

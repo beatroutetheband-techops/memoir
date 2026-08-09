@@ -97,7 +97,7 @@ export default function Home() {
         </section>
 
         {/* BOOKING FORM SECTION */}
-        <section id="booking-section" className="bg-brand-cream border-t border-b border-brand-gold/20 py-20 px-4">
+        <section id="booking-section" className="bg-brand-cream border-t border-b border-brand-gold/40 py-20 px-4">
           <div className="max-w-3xl mx-auto text-center mb-10">
             <span className="text-brand-gold-muted text-xs font-bold tracking-widest uppercase bg-brand-gold/10 border border-brand-gold/25 px-3.5 py-1 rounded-full">
               Intake Questionnaire
