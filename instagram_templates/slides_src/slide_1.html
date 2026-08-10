@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slide 1 - Cover</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1080px;
+      height: 1350px;
+      background-color: #0A0A0D;
+      color: #FAF9F6;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 90px 80px;
+    }
+    
+    /* Background Ambient Glow & Grid */
+    .glow {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 750px;
+      height: 750px;
+      background: radial-gradient(circle, rgba(200, 169, 106, 0.12) 0%, transparent 65%);
+      pointer-events: none;
+      filter: blur(40px);
+    }
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(200, 169, 106, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(200, 169, 106, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* Content Layout */
+    .content {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Top Brand Lockup */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-b: 1px solid rgba(200, 169, 106, 0.2);
+      padding-bottom: 32px;
+    }
+    .brand-logos {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo-memoir {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+    .divider {
+      height: 24px;
+      width: 1px;
+      background-color: rgba(200, 169, 106, 0.35);
+    }
+    .logo-beatroute {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.9;
+    }
+    .header-tag {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C8A96A;
+      background: rgba(200, 169, 106, 0.1);
+      border: 1px solid rgba(200, 169, 106, 0.3);
+      padding: 8px 18px;
+      border-radius: 100px;
+    }
+
+    /* Main Headline Block */
+    .main-body {
+      margin-top: 140px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #C8A96A;
+      margin-bottom: 28px;
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #C8A96A;
+      box-shadow: 0 0 10px rgba(200, 169, 106, 0.8);
+    }
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 76px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: #FAF9F6;
+      margin-bottom: 32px;
+    }
+    .title-italic {
+      font-style: italic;
+      background: linear-gradient(135deg, #FAF9F6 0%, #C8A96A 60%, #9E824C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 400;
+    }
+    .subtitle {
+      font-size: 22px;
+      font-weight: 300;
+      color: #D1D5DB;
+      line-height: 1.6;
+      max-width: 800px;
+    }
+
+    /* Footer Swipe Indicator */
+    .footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-t: 1px solid rgba(200, 169, 106, 0.2);
+      padding-top: 32px;
+    }
+    .swipe-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C8A96A;
+    }
+    .swipe-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(200, 169, 106, 0.12);
+      border: 1px solid rgba(200, 169, 106, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #C8A96A;
+    }
+    .slide-count {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: rgba(250, 249, 246, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="grid"></div>
+
+  <!-- Header -->
+  <div class="header content">
+    <div class="brand-logos">
+      <img src="../../public/memoir.png" class="logo-memoir" alt="Memoir">
+      <div class="divider"></div>
+      <img src="../../public/logo.png" class="logo-beatroute" alt="BeatRoute">
+    </div>
+    <div class="header-tag">Memoir by BeatRoute</div>
+  </div>
+
+  <!-- Main Body -->
+  <div class="main-body content">
+    <div class="badge">
+      <div class="badge-dot"></div>
+      <span>Custom Music Experience</span>
+    </div>
+    
+    <h1 class="title">
+      Every Story Deserves <br>
+      <span class="title-italic">Its Own Song.</span>
+    </h1>
+    
+    <p class="subtitle">
+      We write, compose, and record studio-quality custom songs tailored to your personal love stories, anniversaries, and milestones.
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="swipe-indicator">
+      <span>Swipe to explore</span>
+      <div class="swipe-arrow">&rarr;</div>
+    </div>
+    <div class="slide-count">01 / 05</div>
+  </div>
+</body>
+</html>

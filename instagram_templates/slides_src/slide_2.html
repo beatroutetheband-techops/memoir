@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Slide 2 - The Contrast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 1080px;
+      height: 1350px;
+      background-color: #0A0A0D;
+      color: #FAF9F6;
+      font-family: 'Poppins', sans-serif;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 90px 80px;
+    }
+    .glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(200, 169, 106, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(50px);
+    }
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(200, 169, 106, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(200, 169, 106, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-b: 1px solid rgba(200, 169, 106, 0.2);
+      padding-bottom: 32px;
+      position: relative;
+      z-index: 10;
+    }
+    .brand-logos {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logo-memoir { height: 44px; width: auto; object-fit: contain; }
+    .divider { height: 24px; width: 1px; background-color: rgba(200, 169, 106, 0.35); }
+    .logo-beatroute { height: 30px; width: auto; object-fit: contain; opacity: 0.9; }
+
+    .main-body {
+      position: relative;
+      z-index: 10;
+      margin-top: 60px;
+    }
+    .badge {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #C8A96A;
+      margin-bottom: 24px;
+    }
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: 62px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #FAF9F6;
+      margin-bottom: 48px;
+    }
+
+    /* Luxury Quote Card */
+    .quote-card {
+      background: #121217;
+      border: 1px solid rgba(200, 169, 106, 0.3);
+      border-radius: 28px;
+      padding: 56px 48px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 110px;
+      line-height: 0.5;
+      color: #C8A96A;
+      position: absolute;
+      top: 40px;
+      left: 36px;
+      opacity: 0.3;
+    }
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 32px;
+      line-height: 1.5;
+      color: #FAF9F6;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 28px;
+    }
+    .quote-author {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C8A96A;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-line {
+      width: 32px;
+      height: 1px;
+      background-color: #C8A96A;
+    }
+
+    .footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-t: 1px solid rgba(200, 169, 106, 0.2);
+      padding-top: 32px;
+    }
+    .swipe-indicator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C8A96A;
+    }
+    .swipe-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(200, 169, 106, 0.12);
+      border: 1px solid rgba(200, 169, 106, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #C8A96A;
+    }
+    .slide-count {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: rgba(250, 249, 246, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="grid"></div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand-logos">
+      <img src="../../public/memoir.png" class="logo-memoir" alt="Memoir">
+      <div class="divider"></div>
+      <img src="../../public/logo.png" class="logo-beatroute" alt="BeatRoute">
+    </div>
+  </div>
+
+  <!-- Main Body -->
+  <div class="main-body">
+    <div class="badge">Beyond Generic Gifts</div>
+    <h2 class="title">Cards get misplaced.<br>Gifts gather dust.</h2>
+
+    <div class="quote-card">
+      <div class="quote-mark">&ldquo;</div>
+      <p class="quote-text">
+        A letter can be forgotten over time. But when your memories, words, and feelings are composed into sound... a song lives forever.
+      </p>
+      <div class="quote-author">
+        <div class="author-line"></div>
+        <span>Memoir Artist Manifesto</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="swipe-indicator">
+      <span>Swipe next</span>
+      <div class="swipe-arrow">&rarr;</div>
+    </div>
+    <div class="slide-count">02 / 05</div>
+  </div>
+</body>
+</html>
