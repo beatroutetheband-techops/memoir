@@ -114,7 +114,7 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
                   <h3 className="font-serif text-xl font-bold text-brand-black">
                     {pkg.name}
                   </h3>
-                  <span className={`font-serif text-lg ${pkg.isPopular ? "font-extrabold text-brand-black" : "font-bold text-brand-gold-muted"}`}>
+                  <span className={`font-sans text-lg ${pkg.isPopular ? "font-extrabold text-brand-black" : "font-bold text-brand-gold-muted"}`}>
                     {pkg.price}
                   </span>
                 </div>
@@ -144,11 +144,11 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
                 className={`w-full py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
                   pkg.isPopular
                     ? isSelected
-                      ? "bg-[#0A0A0D] text-brand-gold shadow-md border border-brand-gold/30"
-                      : "bg-[#0A0A0D] text-white hover:text-brand-gold shadow-md border border-brand-gold/20"
+                      ? "bg-[#0A0A0D] text-white shadow-md border border-brand-gold/40"
+                      : "bg-[#0A0A0D] text-white shadow-md border border-brand-gold/20"
                     : isSelected
-                    ? "bg-brand-gold text-brand-black shadow"
-                    : "bg-zinc-950 hover:bg-brand-gold text-brand-ivory hover:text-brand-black"
+                    ? "bg-[#0A0A0D] text-white shadow-md border border-brand-gold/40"
+                    : "bg-zinc-950 hover:bg-brand-black text-white shadow-sm"
                 }`}
               >
                 {isSelected ? "Selected" : pkg.id === 'custom' ? "Enquire Now" : "Select Plan"}

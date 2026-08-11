@@ -314,7 +314,7 @@ export default function AdminDashboard() {
             </div>
             <div>
               <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block">Total Pipeline</span>
-              <span className="text-lg font-bold text-brand-gold font-serif">₹{totalRevenue.toLocaleString("en-IN")}</span>
+              <span className="text-lg font-bold text-brand-gold font-sans tracking-tight">₹{totalRevenue.toLocaleString("en-IN")}</span>
             </div>
           </div>
         </div>
@@ -411,7 +411,7 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4.5 text-gray-350 font-medium">
                       {b.occasion_date}
                     </td>
-                    <td className="px-6 py-4.5 text-right font-serif font-bold text-brand-gold">
+                    <td className="px-6 py-4.5 text-right font-sans font-bold text-brand-gold tracking-tight">
                       {b.package_name === 'custom' ? "Custom" : `₹${b.total_price.toLocaleString("en-IN")}`}
                     </td>
                     <td className="px-6 py-4.5">

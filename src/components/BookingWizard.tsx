@@ -232,10 +232,13 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
     }, 50);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const handleConfirmBooking = async () => {
+    if (step !== 5) return;
     if (!validateStep()) return;
 
+    setIsSubmitting(true);
     try {
       await bookingService.createBooking({
         client_name: form.client_name,
@@ -251,14 +254,20 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
         total_price: selectedPackage === 'custom' ? 0 : totalPrice
       });
       setIsSubmitted(true);
+      setTimeout(() => {
+        const elem = document.getElementById("booking-received-card") || document.getElementById("booking-section");
+        elem?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
     } catch (err) {
       console.error("Booking error:", err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   if (isSubmitted) {
     return (
-      <div className="bg-white border border-gray-100 rounded-2xl p-8 max-w-xl mx-auto shadow-sm text-center py-16">
+      <div id="booking-received-card" className="bg-white border border-gray-100 rounded-2xl p-8 max-w-xl mx-auto shadow-sm text-center py-16">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-500 mb-6">
           <CheckCircle size={36} />
         </div>
@@ -267,6 +276,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
           Thank you for choosing Memoir by BeatRoute Band! We have received your song details. Our creative team will reach out to you via WhatsApp shortly to initiate the lyrics brainstorming.
         </p>
         <button 
+          type="button"
           onClick={() => {
             setIsSubmitted(false);
             setStep(1);
@@ -344,7 +354,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
           <div className="flex items-center gap-4 self-end sm:self-center">
             <div className="text-right">
               <span className="text-[9px] text-gray-400 uppercase tracking-widest block font-bold">Selected Price</span>
-              <span className="font-serif font-bold text-brand-gold text-lg">
+              <span className="font-sans font-bold text-brand-gold text-lg">
                 {planDetails[selectedPackage].priceDisplay}
               </span>
             </div>
@@ -370,9 +380,9 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
             <div 
               className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
                 s === step 
-                  ? "bg-[#0A0A0D] text-brand-gold border border-brand-gold scale-105 shadow-sm" 
+                  ? "bg-[#0A0A0D] text-white border-2 border-brand-gold scale-105 shadow-sm font-extrabold" 
                   : s < step 
-                  ? "bg-brand-gold text-brand-black" 
+                  ? "bg-brand-gold text-white font-bold" 
                   : "bg-gray-200 text-gray-500"
               }`}
             >
@@ -385,7 +395,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="p-6 md:p-8">
+      <form onSubmit={(e) => e.preventDefault()} className="p-6 md:p-8">
         
         {/* Warning if no package selected */}
         {errors.package && (
@@ -524,7 +534,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
                     onClick={() => handleChange("language", lang)}
                     className={`py-2 px-3 border text-xs rounded-xl font-medium cursor-pointer transition-all duration-200 ${
                       form.language === lang 
-                        ? "bg-brand-black text-brand-gold border-brand-gold font-bold shadow-sm" 
+                        ? "bg-brand-black text-white border-brand-gold font-bold shadow-sm" 
                         : "bg-gray-50 border-gray-200 text-gray-600 hover:border-brand-gold/40"
                     }`}
                   >
@@ -545,7 +555,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
                     onClick={() => handleChange("occasion", occ)}
                     className={`py-2 px-3 border text-xs rounded-xl font-medium cursor-pointer transition-all duration-200 ${
                       form.occasion === occ 
-                        ? "bg-brand-black text-brand-gold border-brand-gold font-bold shadow-sm" 
+                        ? "bg-brand-black text-white border-brand-gold font-bold shadow-sm" 
                         : "bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-350"
                     }`}
                   >
@@ -770,7 +780,7 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
 
                 <div className="border-t border-brand-gold/20 pt-3 flex justify-between items-baseline font-bold">
                   <span className="text-sm">Total Estimated Quote</span>
-                  <span className="text-xl text-brand-gold font-serif">
+                  <span className="text-xl text-brand-gold font-sans font-bold">
                     {selectedPackage === 'custom' ? "Enquiry Requested" : `₹${totalPrice.toLocaleString("en-IN")}`}
                   </span>
                 </div>
@@ -820,10 +830,12 @@ export default function BookingWizard({ selectedPackage, onSelectPackage }: Book
             </button>
           ) : (
             <button
-              type="submit"
-              className="px-6 py-2.5 gold-gradient-btn text-brand-black rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-md hover:scale-[1.01] cursor-pointer"
+              type="button"
+              onClick={handleConfirmBooking}
+              disabled={isSubmitting}
+              className="px-6 py-2.5 gold-gradient-btn text-brand-black rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-md hover:scale-[1.01] cursor-pointer disabled:opacity-50"
             >
-              Confirm &amp; Book Song
+              {isSubmitting ? "Submitting..." : "Confirm & Book Song"}
               <ChevronRight size={14} />
             </button>
           )}
