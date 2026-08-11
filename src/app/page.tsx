@@ -195,11 +195,11 @@ export default function Home() {
               <span>@beat.route_</span>
             </a>
             <a 
-              href="mailto:beatroutetheband@gmail.com" 
+              href="mailto:memoir.customsongs@gmail.com" 
               className="flex items-center gap-2 hover:text-brand-gold transition-colors whitespace-nowrap flex-shrink-0"
             >
               <Mail size={14} className="text-brand-gold" />
-              <span>beatroutetheband@gmail.com</span>
+              <span>memoir.customsongs@gmail.com</span>
             </a>
           </div>
 
