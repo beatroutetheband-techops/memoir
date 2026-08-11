@@ -95,15 +95,13 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
             <div
               key={pkg.id}
               className={`rounded-2xl p-6.5 transition-all duration-300 relative flex flex-col justify-between border ${
-                pkg.isPopular
+                isSelected
                   ? "gold-gradient-btn text-brand-black border-brand-gold shadow-xl gold-glow"
-                  : isSelected
-                  ? "bg-white text-brand-black border-brand-gold ring-2 ring-brand-gold/30 shadow-md"
                   : "bg-white text-brand-black border-gray-200 hover:border-brand-gold/50 hover:shadow-sm"
               }`}
             >
               {pkg.isPopular && (
-                <span className="absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#0A0A0D] text-brand-gold text-[9px] font-bold tracking-widest py-1 px-3.5 rounded-full uppercase shadow-md border border-brand-gold/30">
+                <span className="absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#0A0A0D] text-white text-[9px] font-bold tracking-widest py-1 px-3.5 rounded-full uppercase shadow-md border border-brand-gold/30">
                   Most Popular
                 </span>
               )}
@@ -114,12 +112,12 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
                   <h3 className="font-serif text-xl font-bold text-brand-black">
                     {pkg.name}
                   </h3>
-                  <span className={`font-sans text-lg ${pkg.isPopular ? "font-extrabold text-brand-black" : "font-bold text-brand-gold-muted"}`}>
+                  <span className={`font-sans text-lg ${isSelected ? "font-extrabold text-brand-black" : "font-bold text-brand-gold-muted"}`}>
                     {pkg.price}
                   </span>
                 </div>
                 
-                <p className={`text-xs mb-6 leading-relaxed font-medium ${pkg.isPopular ? "text-zinc-900" : "text-gray-500"}`}>
+                <p className={`text-xs mb-6 leading-relaxed font-medium ${isSelected ? "text-zinc-900" : "text-gray-500"}`}>
                   {pkg.desc}
                 </p>
 
@@ -129,9 +127,9 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
                     <li key={i} className="flex items-start gap-2.5 text-xs">
                       <Check 
                         size={14} 
-                        className={`flex-none mt-0.5 ${pkg.isPopular ? "text-brand-black" : "text-brand-gold-muted"}`} 
+                        className={`flex-none mt-0.5 ${isSelected ? "text-brand-black" : "text-brand-gold-muted"}`} 
                       />
-                      <span className={`font-medium ${pkg.isPopular ? "text-zinc-900" : "text-gray-700"}`}>{bullet}</span>
+                      <span className={`font-medium ${isSelected ? "text-zinc-900" : "text-gray-700"}`}>{bullet}</span>
                     </li>
                   ))}
                 </ul>
@@ -142,11 +140,7 @@ export default function PackageSelector({ selectedPackage, onSelectPackage }: Pa
                 type="button"
                 onClick={() => onSelectPackage(pkg.id)}
                 className={`w-full py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
-                  pkg.isPopular
-                    ? isSelected
-                      ? "bg-[#0A0A0D] text-white shadow-md border border-brand-gold/40"
-                      : "bg-[#0A0A0D] text-white shadow-md border border-brand-gold/20"
-                    : isSelected
+                  isSelected
                     ? "bg-[#0A0A0D] text-white shadow-md border border-brand-gold/40"
                     : "bg-zinc-950 hover:bg-brand-black text-white shadow-sm"
                 }`}
